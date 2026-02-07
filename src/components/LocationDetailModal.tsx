@@ -18,6 +18,8 @@ import {
   Cloud,
   Eye,
   Star,
+  Train,
+  MapPinned,
 } from 'lucide-react';
 
 interface LocationDetailModalProps {
@@ -29,6 +31,15 @@ interface LocationDetailModalProps {
 function formatTime(date: Date): string {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
+
+const areaLabels: Record<string, string> = {
+  'central': 'Central Delhi',
+  'old-delhi': 'Old Delhi',
+  'south': 'South Delhi',
+  'north': 'North Delhi',
+  'east': 'East Delhi',
+  'west': 'West Delhi',
+};
 
 export default function LocationDetailModal({
   stop,
@@ -67,11 +78,18 @@ export default function LocationDetailModal({
       <DialogContent className="max-w-md max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-lg font-bold flex items-center gap-2">
-            {location.superStar && <Star className="w-4 h-4 text-travel-amber fill-travel-amber" />}
+            {location.superStar && <Star className="w-4 h-4 text-accent fill-accent" />}
             {location.name}
           </DialogTitle>
-          <DialogDescription className="text-xs text-muted-foreground">
-            {formatTime(stop.startTime)} — {formatTime(stop.endTime)} · {location.categories.join(', ')}
+          <DialogDescription className="text-xs text-muted-foreground flex items-center gap-2 flex-wrap">
+            <span>{formatTime(stop.startTime)} — {formatTime(stop.endTime)}</span>
+            <span>·</span>
+            <span>{location.categories.join(', ')}</span>
+            <span>·</span>
+            <span className="flex items-center gap-1">
+              <MapPinned className="w-3 h-3" />
+              {areaLabels[location.area] || location.area}
+            </span>
           </DialogDescription>
         </DialogHeader>
 
@@ -88,12 +106,12 @@ export default function LocationDetailModal({
           </div>
 
           {/* Best Viewing Tip */}
-          <div className="bg-travel-amber-light rounded-lg p-3">
-            <h4 className="text-sm font-semibold text-accent-foreground flex items-center gap-1.5 mb-1">
-              <MapPin className="w-4 h-4 text-travel-amber" />
-              Best Viewing Spot
+          <div className="bg-accent/10 rounded-lg p-3 border border-accent/20">
+            <h4 className="text-sm font-semibold text-foreground flex items-center gap-1.5 mb-1">
+              <MapPin className="w-4 h-4 text-accent" />
+              Insider Tip
             </h4>
-            <p className="text-sm text-accent-foreground/80">{location.bestViewingTip}</p>
+            <p className="text-sm text-muted-foreground">{location.bestViewingTip}</p>
           </div>
 
           {/* Live Context */}
@@ -120,13 +138,28 @@ export default function LocationDetailModal({
             </div>
           </div>
 
-          {/* Tags & Badges */}
+          {/* Features */}
           <div className="flex flex-wrap gap-1.5">
             {stop.badges.map((badge) => (
               <BadgeIcon key={badge} badge={badge} />
             ))}
-            {location.tags.map((tag) => (
-              <Badge key={tag} variant="outline" className="text-xs">
+            {location.metroNearby && (
+              <Badge variant="outline" className="text-xs gap-1">
+                <Train className="w-3 h-3" />
+                Metro Nearby
+              </Badge>
+            )}
+            {location.kidFriendly && (
+              <Badge variant="outline" className="text-xs">👨‍👩‍👧 Kid Friendly</Badge>
+            )}
+            {location.romantic && (
+              <Badge variant="outline" className="text-xs">💕 Romantic</Badge>
+            )}
+            {location.indoor && (
+              <Badge variant="outline" className="text-xs">🏛️ Indoor</Badge>
+            )}
+            {location.tags.slice(0, 4).map((tag) => (
+              <Badge key={tag} variant="secondary" className="text-xs">
                 {tag}
               </Badge>
             ))}

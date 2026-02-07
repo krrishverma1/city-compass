@@ -15,6 +15,10 @@ import {
   Building2,
   ShoppingBag,
   Church,
+  User,
+  Users,
+  Heart,
+  UserPlus,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,7 +31,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
-import { Interest, LuggageStatus, UserInput } from '@/types/itinerary';
+import { Interest, LuggageStatus, TravelCompanion, UserInput } from '@/types/itinerary';
 import { DEFAULT_USER_LOCATION } from '@/data/delhiLocations';
 
 const INTEREST_OPTIONS: { value: Interest; label: string; icon: React.ElementType }[] = [
@@ -40,11 +44,19 @@ const INTEREST_OPTIONS: { value: Interest; label: string; icon: React.ElementTyp
   { value: 'Spiritual', label: 'Spiritual', icon: Church },
 ];
 
+const COMPANION_OPTIONS: { value: TravelCompanion; label: string; icon: React.ElementType; desc: string }[] = [
+  { value: 'solo', label: 'Solo', icon: User, desc: 'Peaceful gems & cultural immersion' },
+  { value: 'friends', label: 'Friends', icon: Users, desc: 'Adventure, food & fun spots' },
+  { value: 'family', label: 'Family', icon: UserPlus, desc: 'Kid-friendly & comfortable' },
+  { value: 'partner', label: 'Partner', icon: Heart, desc: 'Romantic & scenic locations' },
+];
+
 export default function OnboardingForm() {
   const navigate = useNavigate();
   const [locationName, setLocationName] = useState('');
   const [luggageStatus, setLuggageStatus] = useState<LuggageStatus>('no-luggage');
   const [interests, setInterests] = useState<Interest[]>([]);
+  const [companion, setCompanion] = useState<TravelCompanion>('solo');
   const [timeOverride, setTimeOverride] = useState('');
 
   const toggleInterest = (interest: Interest) => {
@@ -81,6 +93,7 @@ export default function OnboardingForm() {
       currentTime: now,
       luggageStatus,
       interests: interests.length > 0 ? interests : ['History', 'Food', 'Nature'],
+      companion,
     };
 
     navigate('/itinerary', { state: { userInput } });
@@ -138,6 +151,40 @@ export default function OnboardingForm() {
                 >
                   <Navigation className="w-4 h-4" />
                 </Button>
+              </div>
+            </div>
+
+            {/* Traveling With */}
+            <div className="space-y-3">
+              <Label className="flex items-center gap-2 text-sm font-medium">
+                <Users className="w-4 h-4 text-primary" />
+                Traveling With
+              </Label>
+              <div className="grid grid-cols-2 gap-2">
+                {COMPANION_OPTIONS.map(({ value, label, icon: Icon, desc }) => {
+                  const selected = companion === value;
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setCompanion(value)}
+                      className={`flex items-start gap-2.5 p-3 rounded-lg text-left transition-all duration-200 border
+                        ${
+                          selected
+                            ? 'bg-primary/10 border-primary text-foreground shadow-sm'
+                            : 'bg-card border-border hover:border-primary/30 text-muted-foreground'
+                        }`}
+                    >
+                      <div className={`mt-0.5 ${selected ? 'text-primary' : 'text-muted-foreground'}`}>
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className={`text-sm font-medium ${selected ? 'text-foreground' : ''}`}>{label}</p>
+                        <p className="text-[10px] text-muted-foreground leading-tight mt-0.5">{desc}</p>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 

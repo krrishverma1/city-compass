@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Map, List, Compass } from 'lucide-react';
+import { ArrowLeft, Map, List, Compass, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UserInput } from '@/types/itinerary';
 import { useSimulation } from '@/contexts/SimulationContext';
@@ -26,15 +26,18 @@ export default function ItineraryPage() {
     currentTime: new Date(),
     luggageStatus: 'no-luggage',
     interests: ['History', 'Food', 'Nature'],
+    companion: 'solo',
   };
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [mobileView, setMobileView] = useState<'timeline' | 'map'>('timeline');
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const itinerary = useMemo(
     () => generateItinerary(userInput, simulation),
-    [userInput, simulation]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [userInput, simulation, refreshKey]
   );
 
   const handleSelectStop = useCallback(
@@ -78,6 +81,17 @@ export default function ItineraryPage() {
               From {userInput.locationName} · {userInput.interests.join(', ')}
             </p>
           </div>
+
+          {/* Refresh button */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setRefreshKey((k) => k + 1)}
+            className="gap-1 text-xs shrink-0"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            Refresh
+          </Button>
 
           {/* Mobile view toggle */}
           {isMobile && (
@@ -124,7 +138,11 @@ export default function ItineraryPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <RouteSummary itinerary={itinerary} />
+                  <RouteSummary
+                    itinerary={itinerary}
+                    companion={userInput.companion}
+                    locationName={userInput.locationName}
+                  />
                 </motion.div>
               )}
 

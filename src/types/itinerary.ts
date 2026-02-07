@@ -2,6 +2,8 @@ export type Interest = 'History' | 'Nature' | 'Food' | 'Adventure' | 'Architectu
 
 export type LuggageStatus = 'no-luggage' | 'light-backpack' | 'heavy-suitcase';
 
+export type TravelCompanion = 'solo' | 'friends' | 'family' | 'partner';
+
 export type WeatherCondition = 'clear' | 'rain' | 'storm';
 export type TrafficDensity = 'light' | 'moderate' | 'heavy';
 export type CrowdLevel = 'low' | 'medium' | 'high';
@@ -28,6 +30,12 @@ export interface DelhiLocation {
   estimatedVisitMinutes: number;
   significance: string;
   bestViewingTip: string;
+  companionFit: TravelCompanion[];
+  kidFriendly: boolean;
+  romantic: boolean;
+  groupFun: boolean;
+  metroNearby: boolean;
+  area: 'central' | 'north' | 'south' | 'east' | 'west' | 'old-delhi';
 }
 
 export interface LuggageStorage {
@@ -43,6 +51,7 @@ export interface UserInput {
   currentTime: Date;
   luggageStatus: LuggageStatus;
   interests: Interest[];
+  companion: TravelCompanion;
 }
 
 export interface SimulationState {
