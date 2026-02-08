@@ -269,9 +269,6 @@ export default function OnboardingForm() {
           </CardContent>
         </Card>
 
-        <p className="text-center text-xs text-muted-foreground mt-4">
-          Powered by smart logic — no backend needed
-        </p>
       </motion.div>
     </div>
   );

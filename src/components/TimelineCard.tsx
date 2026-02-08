@@ -111,6 +111,21 @@ export default function TimelineCard({
                     {location.significance.split('.')[0]}.
                   </p>
                 )}
+                {!isLuggage && location.underrated && (
+                  <span className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium bg-secondary text-primary">
+                    💎 Underrated Gem
+                  </span>
+                )}
+                {!isLuggage && location.transportTip && (
+                  <p className="text-[10px] text-muted-foreground mt-1 flex items-center gap-1">
+                    🚇 {location.transportTip}
+                  </p>
+                )}
+                {!isLuggage && location.nearbyFood && (
+                  <p className="text-[10px] text-muted-foreground mt-0.5 flex items-center gap-1">
+                    🍽️ {location.nearbyFood}
+                  </p>
+                )}
               </div>
               <div className="text-right shrink-0 flex flex-col items-end gap-1">
                 <div className="flex items-center gap-1 text-xs font-medium text-foreground bg-muted rounded-md px-2 py-1">

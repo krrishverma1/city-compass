@@ -1,6 +1,6 @@
 import React from 'react';
 import { BadgeType } from '@/types/itinerary';
-import { CloudRain, Car, Sunset, Users } from 'lucide-react';
+import { CloudRain, Car, Sunset, Users, Gem } from 'lucide-react';
 
 const BADGE_CONFIG: Record<BadgeType, { label: string; icon: React.ElementType; className: string }> = {
   'rain-safe': {
@@ -22,6 +22,11 @@ const BADGE_CONFIG: Record<BadgeType, { label: string; icon: React.ElementType; 
     label: 'Low Crowd',
     icon: Users,
     className: 'bg-secondary text-secondary-foreground',
+  },
+  'underrated-gem': {
+    label: 'Underrated Gem',
+    icon: Gem,
+    className: 'bg-secondary text-primary',
   },
 };
 
