@@ -358,6 +358,9 @@ export function generateItinerary(
     if (isGoldenHour(startTime) && item.location.scenic && !badges.includes('best-view-now')) {
       badges.push('best-view-now');
     }
+    if (item.location.underrated && !badges.includes('underrated-gem')) {
+      badges.push('underrated-gem');
+    }
 
     stops.push({
       location: item.location,

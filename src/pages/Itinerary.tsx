@@ -13,6 +13,7 @@ import SimulatorPanel from '@/components/SimulatorPanel';
 import SafetyAlert from '@/components/SafetyAlert';
 import LocationDetailModal from '@/components/LocationDetailModal';
 import MapView from '@/components/MapView';
+import ShoppingSection from '@/components/ShoppingSection';
 
 export default function ItineraryPage() {
   const location = useLocation();
@@ -145,6 +146,9 @@ export default function ItineraryPage() {
                   />
                 </motion.div>
               )}
+
+              {/* Shopping Section */}
+              <ShoppingSection />
 
               {/* Timeline */}
               <ItineraryTimeline

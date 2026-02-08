@@ -165,6 +165,33 @@ export default function LocationDetailModal({
             ))}
           </div>
 
+          {/* Transport & Food Tips */}
+          {(location.transportTip || location.nearbyFood) && (
+            <div className="space-y-2">
+              {location.transportTip && (
+                <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                  <Train className="w-3.5 h-3.5 shrink-0 mt-0.5 text-primary" />
+                  <span><span className="font-medium text-foreground">How to get here:</span> {location.transportTip}</span>
+                </div>
+              )}
+              {location.nearbyFood && (
+                <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                  <MapPin className="w-3.5 h-3.5 shrink-0 mt-0.5 text-accent" />
+                  <span><span className="font-medium text-foreground">Food nearby:</span> {location.nearbyFood}</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Underrated badge */}
+          {location.underrated && (
+            <div className="bg-secondary/50 rounded-lg p-2.5 border border-primary/20">
+              <p className="text-xs font-medium text-primary flex items-center gap-1.5">
+                💎 Underrated Gem — Most tourists miss this spot!
+              </p>
+            </div>
+          )}
+
           {/* Hours */}
           <div className="flex items-center gap-2 text-xs text-muted-foreground pt-1 border-t">
             <Clock className="w-3.5 h-3.5" />

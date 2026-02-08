@@ -36,6 +36,9 @@ export interface DelhiLocation {
   groupFun: boolean;
   metroNearby: boolean;
   area: 'central' | 'north' | 'south' | 'east' | 'west' | 'old-delhi';
+  underrated?: boolean;
+  transportTip?: string;
+  nearbyFood?: string;
 }
 
 export interface LuggageStorage {
@@ -62,7 +65,7 @@ export interface SimulationState {
   timeOverride: Date | null;
 }
 
-export type BadgeType = 'rain-safe' | 'avoids-traffic' | 'best-view-now' | 'low-crowd';
+export type BadgeType = 'rain-safe' | 'avoids-traffic' | 'best-view-now' | 'low-crowd' | 'underrated-gem';
 
 export interface ItineraryStop {
   location: DelhiLocation | LuggageStorage;
@@ -80,4 +83,33 @@ export interface Itinerary {
   totalDistanceKm: number;
   totalStops: number;
   safetyAlert: boolean;
+}
+
+// ══════════════ SHOPPING & DEALS ══════════════
+
+export type ShoppingCategory = 'fashion' | 'electronics' | 'handicrafts' | 'jewelry' | 'spices' | 'textiles' | 'books' | 'home-decor';
+
+export interface ShoppingDeal {
+  id: string;
+  shopName: string;
+  area: string;
+  category: ShoppingCategory;
+  dealType: 'bogo' | 'discount' | 'combo' | 'seasonal';
+  title: string;
+  description: string;
+  originalPrice: number;
+  dealPrice: number;
+  validUntil: string;
+  isDemo: boolean; // clearly marks demo data
+  coordinates: Coordinates;
+  metroNearby: boolean;
+}
+
+export interface DealBuddyRequest {
+  id: string;
+  dealId: string;
+  userName: string;
+  itemWanted: string;
+  lookingForPartner: boolean;
+  createdAt: Date;
 }
